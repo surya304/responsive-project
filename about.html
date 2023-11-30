@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us </title>
+  <meta name="description" content="This is the about us page Describing My work Experience ">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="grid.css">
+
+<script src="data.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="nav">
+    <input type="checkbox" id="nav-check">
+    <div class="nav-header">
+        <div class="nav-title">
+            Logo
+        </div>
+    </div>
+    <div class="nav-btn">
+        <label for="nav-check">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </div>
+
+    <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+
+
+
+  <section>
+    <h1 style="text-align: center;">Search Indian Cuisine</h1>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search for Indian recipes">
+      <button onclick="searchRecipes()">Search</button>
+    </div>
+    <p id="errorText" class="error"></p>
+  </section>
+
+
+
+
+  <main id="recipeList"></main>
+
+
+  <div class="footer-basic">
+    <footer>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="index.html">Home</a></li>
+        <li class="list-inline-item"><a href="about.html">About</a></li>
+        <li class="list-inline-item"><a href="topic.html">Topic</a></li>
+        <li class="list-inline-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="copyright">Sai Surya kalagani 8888438</p>
+    </footer>
+  </div>
+
+  <script>
+
+    async function searchRecipes() {
+      const searchInput = document.getElementById('searchInput').value.trim();
+      if (searchInput !== '') {
+      
+
+        // const response = await fetch(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&tags=under_30_minutes&q=${searchInput}`, {
+        //   headers: {
+        //     'X-RapidAPI-Key': '110cf6f1f8msh566bb571266098ep11a200jsnfeb92ee3c7c8',
+        //     'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+        //   }
+        // });
+        // const data = await response.json();
+
+
+        console.log(data);
+
+        // var finaldata=data;
+        var finaldata=data.results;
+
+        if (finaldata.length > 0) {
+          finaldata.forEach(recipe => {
+            const recipeCard = document.createElement('div');
+            recipeCard.classList.add('recipe-card');
+            recipeCard.innerHTML = `
+          <img src="${recipe.thumbnail_url}" alt="${recipe.name}">
+          <h3>${recipe.name}</h3>
+          <p>${recipe.description}</p>
+        `;
+            recipeList.appendChild(recipeCard);
+          });
+        } else {
+          document.getElementById('errorText').textContent = 'No recipes found.';
+        }
+      } else {
+        document.getElementById('errorText').textContent = 'Please enter a search term.';
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
